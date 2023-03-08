@@ -15,7 +15,15 @@ class ScoringGroup:
 	def num_dice(self):
 		return len(self.dice)
 	
-	# TODO: Add a function here to remove a tuple of (Die, number) from self.dice
+	def remove_dice(self, to_remove):
+		print(self.dice)
+		for i in range(to_remove[1]):
+			try:
+				self.dice.remove(to_remove[0])
+			except :
+				print('Error! Cannot remove die because it is not there')
+			
+			
 	
 	def score(self):
 		counts = list(Counter(self.dice).items())
