@@ -7,6 +7,7 @@ class ScoringGroup:
 	def __init__(self, dice = []):
 		self.dice = dice
 		self.group_score = None
+		self.all_dice_consumed = False
 		self.child_groups = []
 		
 	def __repr__(self):
@@ -21,10 +22,8 @@ class ScoringGroup:
 			try:
 				self.dice.remove(to_remove[0])
 			except :
-				print('Error! Cannot remove die because it is not there')
+				print(f'Error! Cannot remove die {to_remove[0]} because it is not there')
 			
-			
-	
 	def score(self):
 		counts = list(Counter(self.dice).items())
 		print(counts)
@@ -35,31 +34,29 @@ class ScoringGroup:
 			if len(counts) == 1:
 				print('6 of a kind')
 				self.group_score = 3000
-				return
 				
 			# Check for 2 triplets
-			if all(value[1] == 3 for value in counts):
+			elif all(value[1] == 3 for value in counts):
 				print('2 triplets')
 				self.group_score = 2500
-				return
 			
 			# Check for 3 pairs
-			if all(value[1] == 2 for value in counts):
+			elif all(value[1] == 2 for value in counts):
 				print('3 pairs')
 				self.group_score = 1500
-				return
 
 			# Check for 1-6 run
-			if all(value[1] == 1 for value in counts):
+			elif all(value[1] == 1 for value in counts):
 				print('1-6 run')
 				self.group_score = 1500
-				return
 			
 			# Check for 4 of a kind with pair
-			if counts[0][1] == 4 and counts[1][1] == 2:
+			elif counts[0][1] == 4 and counts[1][1] == 2:
 				print('4 of a kind and a pair')
 				self.group_score = 1500
-				return
+			
+			self.all_dice_consumed = True
+			return
 				
 		
 		# Check for 5 of a kind
